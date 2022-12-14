@@ -1,10 +1,43 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useMultieStep } from './useMultieStep';
 import UserForm from './UserForm';
 import AddressForm from './AddressForm';
 import AccountForm from './AccountForm';
 
 const App = () => {
+
+
+  interface INITType{
+    firstName:string,
+    lastName:string,
+    age:string,
+    street:string,
+    city:string,
+    state:string,
+    eamil:string,
+    password:string,
+    zip:string
+  }
+  
+  const INIT_DAT:INITType = {
+    firstName:"",
+    lastName:"",
+    age:"",
+    street:"",
+    city:"",
+    state:"",
+    eamil:"",
+    password:"",
+    zip:""
+  }
+
+  const [data, setData] = useState(INIT_DAT);
+  
+  function updateFields(field:Partial<INITType>){
+    setData(prev => {
+      return { ...prev , ...field}
+    })
+  }
 
   const {   
     currentStepIndex,
@@ -15,11 +48,18 @@ const App = () => {
     isFirstStep,
     isLastStep,
     goTo} = useMultieStep([
-      <UserForm/>,
+      <UserForm
+        {...data}
+        updateFields={updateFields}
+      />,
       <AddressForm/>,
       <AccountForm/>
     ])
-
+ 
+  function onSubmit(e:FormEvent){
+    e.preventDefault();
+    next();
+  }
   return (
     <div style={{
       position:"relative",
@@ -29,7 +69,7 @@ const App = () => {
       margin:"1rem",
       borderRadius:".5rem"
     }}>
-      <form action="#">
+      <form onSubmit={onSubmit}>
         <div style={{
           position:"absolute",
           top:".5rem",
@@ -42,7 +82,7 @@ const App = () => {
           marginTop:"1rem"
         }}>
            {!isFirstStep && <button type='button' onClick={back}>Prev</button>}
-           {<button type='button' onClick={next}>
+           {<button type='submit'>
             {isLastStep ? "Done!" : "Next"}
            </button>}
            {/* <button type='button' onClick={()=>{goTo(currentStepIndex)}}></button> */}
