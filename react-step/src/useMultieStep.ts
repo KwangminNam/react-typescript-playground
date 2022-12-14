@@ -14,7 +14,7 @@ export function useMultieStep(steps:ReactElement[]){
 
   function back(){
     setCurrentStepIndex(i => {
-      if(i <= steps.length - 1){
+      if(i === 0){
         return i
       }
       return i - 1

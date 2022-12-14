@@ -1,5 +1,8 @@
 import React from 'react';
 import { useMultieStep } from './useMultieStep';
+import UserForm from './UserForm';
+import AddressForm from './AddressForm';
+import AccountForm from './AccountForm';
 
 const App = () => {
 
@@ -12,9 +15,9 @@ const App = () => {
     isFirstStep,
     isLastStep,
     goTo} = useMultieStep([
-      <div>1</div>,
-      <div>2</div>,
-      <div>3</div>,
+      <UserForm/>,
+      <AddressForm/>,
+      <AccountForm/>
     ])
 
   return (
@@ -42,6 +45,7 @@ const App = () => {
            {<button type='button' onClick={next}>
             {isLastStep ? "Done!" : "Next"}
            </button>}
+           {/* <button type='button' onClick={()=>{goTo(currentStepIndex)}}></button> */}
         </div>
       </form>
     </div>
