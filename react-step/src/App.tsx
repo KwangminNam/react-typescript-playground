@@ -52,7 +52,10 @@ const App = () => {
         {...data}
         updateFields={updateFields}
       />,
-      <AddressForm/>,
+      <AddressForm
+        {...data}
+        updateFields={updateFields}
+      />,
       <AccountForm/>
     ])
  
