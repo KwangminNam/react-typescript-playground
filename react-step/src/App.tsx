@@ -88,7 +88,6 @@ const App = () => {
            {<button type='submit'>
             {isLastStep ? "Done!" : "Next"}
            </button>}
-           {/* <button type='button' onClick={()=>{goTo(currentStepIndex)}}></button> */}
         </div>
       </form>
     </div>
