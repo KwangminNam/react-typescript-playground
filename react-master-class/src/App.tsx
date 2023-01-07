@@ -1,25 +1,22 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Circle from "./Circle";
+import React from 'react';
+import styled from 'styled-components';
+
 
 const App = () => {
-  const [vlaue, setValue] = useState("");
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { currentTarget:{value} } = e;
-    setValue(value);
-  };
-
-  const onSumbit = (e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('hello'+vlaue);
-  }
+  const Wrapper = styled.div`
+    background-color: ${props => props.theme.bgColor};
+    width: 100vw;
+    height: 100vh;
+  `
+  const Text = styled.h1`
+    color: ${props => props.theme.textColor};
+  `
 
   return (
-    <form onSubmit={onSumbit}>
-      <input type="text" value={vlaue} onChange={onChange} />
-      <button>click</button>
-    </form>
+    <Wrapper>
+      <Text>hello world</Text>
+    </Wrapper>
   );
 };
 
