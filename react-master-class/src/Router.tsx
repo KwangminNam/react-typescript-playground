@@ -3,6 +3,7 @@ import { BrowserRouter, createBrowserRouter, Link, Route, Routes } from "react-r
 import Home from '../src/components/Home'
 import About from '../src/components/About'
 import Root from './Root'
+import NotFound from "./NotFound";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
         path:"about",
         element:<About/>
       }
-    ]
+    ],
+    errorElement:<NotFound/>
   }
 ])
 
