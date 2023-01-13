@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Header } from './Coins';
 
 const Coin = () => {
 
@@ -8,7 +9,11 @@ const Coin = () => {
 
   return (
     <div>
+      <Header>
+        <Link to='/'>Home</Link>
+      </Header>
       coin {coinId}
+      
     </div>
   );
 };
