@@ -13,7 +13,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  a{
+  a {
     color: #fff;
     font-size: 40px;
   }
@@ -28,7 +28,8 @@ const CoinLi = styled.li`
   border-radius: 10px;
   a {
     transition: color 0.2s ease-in-out;
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 20px;
   }
   &:hover {
@@ -54,6 +55,12 @@ const Loading = styled.span`
   color: #000;
   margin: 0 auto;
 `;
+
+const Img = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-right: 20px;
+`
 
 interface CoinTypes {
   id: string;
@@ -90,7 +97,10 @@ const Coins = () => {
         <CoinUl>
           {coinData.map((item) => (
             <CoinLi key={item.id}>
-              <Link to={`${item.id}`}>{item.name} &rarr;</Link>
+              <Link to={`${item.id}`}>
+              <Img src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}/>
+                {item.name} &rarr;
+              </Link>
             </CoinLi>
           ))}
         </CoinUl>
