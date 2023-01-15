@@ -97,7 +97,7 @@ const Coins = () => {
         <CoinUl>
           {coinData.map((item) => (
             <CoinLi key={item.id}>
-              <Link to={`${item.id}`}>
+              <Link to={`${item.id}`} state={item.name}>
               <Img src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}/>
                 {item.name} &rarr;
               </Link>
