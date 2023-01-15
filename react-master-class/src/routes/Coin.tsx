@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { Header } from './Coins';
+import { Header , Title , Loading , Container} from './Coins';
 
 interface RouteState{
   state:string;
 }
 
 const Coin = () => {
-
+  const [loading, setLoading] = useState(true);
   const {coinId} = useParams();
   const {state} = useLocation() as RouteState;
+  useEffect(()=>{
+    (async()=> {
+      const infoData = await(
+        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+      ).json();
+
+      const priceData = await(
+        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+      ).json();
+
+    })()
+  },[])
 
   return (
-    <div>
+    <Container>
       <Header>
-        <Link to='/'>Home</Link>
+        <Title>{state}</Title>
       </Header>
-      {state}
+      {loading ? <Loading>Loading..</Loading> : null}
       
-    </div>
+    </Container>
   );
 };
 

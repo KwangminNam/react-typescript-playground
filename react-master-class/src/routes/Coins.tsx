@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const Container = styled.div`
+export const Container = styled.div`
   padding: 0 20px;
   max-width: 520px;
   margin: 0 auto;
@@ -40,12 +40,12 @@ const CoinLi = styled.li`
   }
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   color: ${(props) => props.theme.textColor};
   font-size: 52px;
 `;
 
-const Loading = styled.span`
+export const Loading = styled.span`
   background-color: ${(props) => props.theme.bgColor};
   font-size: 42px;
   width: 200px;
