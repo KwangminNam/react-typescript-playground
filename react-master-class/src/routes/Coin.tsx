@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import {  Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
+import Price from "./Price";
 
 interface RouteState {
   state: string;
@@ -110,6 +112,8 @@ const Coin = () => {
   }, [coinId]);
 
   return (
+    <>
+    
     <Container>
       <Header>
         <Title>{state ? state : loading ? "Loading.." : info?.name}</Title>
@@ -146,6 +150,12 @@ const Coin = () => {
         </>
       )}
     </Container>
+    <Routes>
+      <Route path="chart" element={<Chart/>}/>
+      <Route path="price" element={<Price/>}/>
+    </Routes>
+    </>
+    
   );
 };
 

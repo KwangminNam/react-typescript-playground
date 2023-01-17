@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Chart = () => {
+const Price = () => {
   return (
     <div>
-      Chart
+      price
     </div>
   );
 };
 
-export default Chart;
+export default Price;
