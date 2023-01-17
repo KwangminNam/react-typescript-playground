@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
 import { Header, Title, Loading, Container } from "./Coins";
 
 interface RouteState {
@@ -41,26 +42,49 @@ interface PriceDataTypes {
   last_updated: string;
   quotes: {
     USD: {
-      ath_date:string
-      ath_price:number
-      market_cap:number
-      market_cap_change_24h:number
-      percent_change_1h:number
-      percent_change_1y:number
-      percent_change_6h:number
-      percent_change_7d:number
-      percent_change_12h:number
-      percent_change_15m:number
-      percent_change_24h:number
-      percent_change_30d:number
-      percent_change_30m:number
-      percent_from_price_ath:number
-      price:number
-      volume_24h:number
-      volume_24h_change_24h:number
+      ath_date: string;
+      ath_price: number;
+      market_cap: number;
+      market_cap_change_24h: number;
+      percent_change_1h: number;
+      percent_change_1y: number;
+      percent_change_6h: number;
+      percent_change_7d: number;
+      percent_change_12h: number;
+      percent_change_15m: number;
+      percent_change_24h: number;
+      percent_change_30d: number;
+      percent_change_30m: number;
+      percent_from_price_ath: number;
+      price: number;
+      volume_24h: number;
+      volume_24h_change_24h: number;
     };
   };
 }
+
+const Overivew = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: orange;
+  padding: 10px 20px;
+  border-radius: 10px;
+`;
+const OverviewItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span {
+    &:first-child {
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+  }
+`;
+const Description = styled.p`
+  margin: 20px 0;
+`;
 
 const Coin = () => {
   const [loading, setLoading] = useState(true);
@@ -74,22 +98,53 @@ const Coin = () => {
       const infoData = await (
         await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
       ).json();
-      console.log(infoData);
+
       const priceData = await (
         await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
       ).json();
-      console.log(priceData);
+
       setInfo(infoData);
       setPrice(priceData);
+      setLoading(false);
     })();
-  }, []);
+  }, [coinId]);
 
   return (
     <Container>
       <Header>
-        <Title>{state}</Title>
+        <Title>{state ? state : loading ? "Loading.." : info?.name}</Title>
       </Header>
-      {loading ? <Loading>Loading..</Loading> : null}
+      {loading ? (
+        <Loading>Loading..</Loading>
+      ) : (
+        <>
+          <Overivew>
+            <OverviewItem>
+              <span>Rank:</span>
+              <span>{info?.rank}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Symbol:</span>
+              <span>{info?.symbol}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Open Source</span>
+              <span>{info?.open_source === null ? "Yes" : "NO"}</span>
+            </OverviewItem>
+          </Overivew>
+          <Description>{info?.description}</Description>
+          <Overivew>
+          <OverviewItem>
+              <span>Total Supply:</span>
+              <span>{price?.total_supply}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Max Supply:</span>
+              <span>{price?.max_supply}</span>
+            </OverviewItem>
+          </Overivew>
+        </>
+      )}
     </Container>
   );
 };
