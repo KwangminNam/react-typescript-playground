@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
@@ -113,49 +113,47 @@ const Coin = () => {
 
   return (
     <>
-    
-    <Container>
-      <Header>
-        <Title>{state ? state : loading ? "Loading.." : info?.name}</Title>
-      </Header>
-      {loading ? (
-        <Loading>Loading..</Loading>
-      ) : (
-        <>
-          <Overivew>
-            <OverviewItem>
-              <span>Rank:</span>
-              <span>{info?.rank}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Symbol:</span>
-              <span>{info?.symbol}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Open Source</span>
-              <span>{info?.open_source === null ? "Yes" : "NO"}</span>
-            </OverviewItem>
-          </Overivew>
-          <Description>{info?.description}</Description>
-          <Overivew>
-          <OverviewItem>
-              <span>Total Supply:</span>
-              <span>{price?.total_supply}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Max Supply:</span>
-              <span>{price?.max_supply}</span>
-            </OverviewItem>
-          </Overivew>
-        </>
-      )}
-    </Container>
-    <Routes>
-      <Route path="chart" element={<Chart/>}/>
-      <Route path="price" element={<Price/>}/>
-    </Routes>
+      <Container>
+        <Header>
+          <Title>{state ? state : loading ? "Loading.." : info?.name}</Title>
+        </Header>
+        {loading ? (
+          <Loading>Loading..</Loading>
+        ) : (
+          <>
+            <Overivew>
+              <OverviewItem>
+                <span>Rank:</span>
+                <span>{info?.rank}</span>
+              </OverviewItem>
+              <OverviewItem>
+                <span>Symbol:</span>
+                <span>{info?.symbol}</span>
+              </OverviewItem>
+              <OverviewItem>
+                <span>Open Source</span>
+                <span>{info?.open_source === null ? "Yes" : "NO"}</span>
+              </OverviewItem>
+            </Overivew>
+            <Description>{info?.description}</Description>
+            <Overivew>
+              <OverviewItem>
+                <span>Total Supply:</span>
+                <span>{price?.total_supply}</span>
+              </OverviewItem>
+              <OverviewItem>
+                <span>Max Supply:</span>
+                <span>{price?.max_supply}</span>
+              </OverviewItem>
+            </Overivew>
+          </>
+        )}
+      </Container>
+      <Routes>
+        <Route path="chart" element={<Chart />} />
+        <Route path="price" element={<Price />} />
+      </Routes>
     </>
-    
   );
 };
 
