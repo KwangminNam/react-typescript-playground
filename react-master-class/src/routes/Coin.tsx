@@ -95,7 +95,7 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-const Tab = styled.span`
+const Tab = styled.span<{isActive : boolean}>`
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
@@ -107,6 +107,7 @@ const Tab = styled.span`
   a {
     display: block;
     width: 100%;
+    color:${props => props.isActive ? props.theme.bgColor : "#fff"}
   }
 `;
 
@@ -117,7 +118,9 @@ const Coin = () => {
   const { state } = useLocation() as RouteState;
   const [info, setInfo] = useState<InfoDataTypes>();
   const [price, setPrice] = useState<PriceDataTypes>();
-  
+  const priceMatch = useMatch("/:coinId/price");
+  const chartMatch = useMatch("/:coinId/chart");
+
 
   useEffect(() => {
     (async () => {
@@ -174,10 +177,10 @@ const Coin = () => {
         )}
       </Container>
       <Tabs>
-        <Tab>
+        <Tab isActive={chartMatch !== null}>
           <Link to="chart">Chart</Link>
         </Tab>
-        <Tab>
+        <Tab isActive={priceMatch !== null}>
           <Link to="price">Price</Link>
         </Tab>
       </Tabs>
