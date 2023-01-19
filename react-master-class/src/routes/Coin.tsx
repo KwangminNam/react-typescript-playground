@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
@@ -88,12 +88,36 @@ const Description = styled.p`
   margin: 20px 0;
 `;
 
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: tomato;
+  padding: 10px 0;
+  color: #fff;
+  border-radius: 10px;
+  a {
+    display: block;
+    width: 100%;
+  }
+`;
+
+
 const Coin = () => {
   const [loading, setLoading] = useState(true);
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
   const [info, setInfo] = useState<InfoDataTypes>();
   const [price, setPrice] = useState<PriceDataTypes>();
+  
 
   useEffect(() => {
     (async () => {
@@ -149,6 +173,14 @@ const Coin = () => {
           </>
         )}
       </Container>
+      <Tabs>
+        <Tab>
+          <Link to="chart">Chart</Link>
+        </Tab>
+        <Tab>
+          <Link to="price">Price</Link>
+        </Tab>
+      </Tabs>
       <Routes>
         <Route path="chart" element={<Chart />} />
         <Route path="price" element={<Price />} />
