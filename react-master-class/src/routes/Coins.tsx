@@ -104,7 +104,7 @@ const Coins = () => {
               <Link to={`${item.id}`} state={item.name}>
               <Img src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}/>
                 {item.name} &rarr;
-              </Link>
+              </Link>     
             </CoinLi>
           ))}
         </CoinUl>
@@ -114,3 +114,4 @@ const Coins = () => {
 };
 
 export default Coins;
+          

@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link, Route, Routes, useLocation, useMatch, useParams } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useParams
+} from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
 import Price from "./Price";
+import { useQuery } from "@tanstack/react-query";
+import {priceData,infoData } from '../api'
 
 interface RouteState {
   state: string;
@@ -95,7 +104,7 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-const Tab = styled.span<{isActive : boolean}>`
+const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
@@ -107,13 +116,12 @@ const Tab = styled.span<{isActive : boolean}>`
   a {
     display: block;
     width: 100%;
-    color:${props => props.isActive ? props.theme.bgColor : "#fff"}
+    color: ${(props) => (props.isActive ? props.theme.bgColor : "#fff")};
   }
 `;
 
-
 const Coin = () => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
   const [info, setInfo] = useState<InfoDataTypes>();
@@ -121,28 +129,38 @@ const Coin = () => {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const infoData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+  //     ).json();
 
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
+  //     const priceData = await (
+  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+  //     ).json();
 
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
+  //     setInfo(infoData);
+  //     setPrice(priceData);
+  //     setLoading(false);
+  //   })();
+  // }, [coinId]);
 
-      setInfo(infoData);
-      setPrice(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const { isLoading: infoLoaidng, data: infoData } = useQuery(
+    ["info", coinId],
+    () => infoData(coinId)
+  );
+  const { isLoading: priceLoading, data: priceData } = useQuery(
+    ["price", coinId],
+    () => priceData(coinId)
+  );
+
+  const loading = infoLoaidng || priceLoading;
 
   return (
     <>
       <Container>
         <Header>
-          <Title>{state ? state : loading ? "Loading.." : info?.name}</Title>
+          <Title>{state ? state : loading ? "Loading.." : infoData?.name}</Title>
         </Header>
         {loading ? (
           <Loading>Loading..</Loading>
@@ -151,26 +169,26 @@ const Coin = () => {
             <Overivew>
               <OverviewItem>
                 <span>Rank:</span>
-                <span>{info?.rank}</span>
+                <span>{infoData?.rank}</span>
               </OverviewItem>
               <OverviewItem>
                 <span>Symbol:</span>
-                <span>{info?.symbol}</span>
+                <span>{infoData?.symbol}</span>
               </OverviewItem>
               <OverviewItem>
                 <span>Open Source</span>
-                <span>{info?.open_source === null ? "Yes" : "NO"}</span>
+                <span>{infoData?.open_source === null ? "Yes" : "NO"}</span>
               </OverviewItem>
             </Overivew>
-            <Description>{info?.description}</Description>
+            <Description>{infoData?.description}</Description>
             <Overivew>
               <OverviewItem>
                 <span>Total Supply:</span>
-                <span>{price?.total_supply}</span>
+                <span>{priceData?.total_supply}</span>
               </OverviewItem>
               <OverviewItem>
                 <span>Max Supply:</span>
-                <span>{price?.max_supply}</span>
+                <span>{priceData?.max_supply}</span>
               </OverviewItem>
             </Overivew>
           </>
@@ -191,6 +209,5 @@ const Coin = () => {
     </>
   );
 };
-
 
 export default Coin;
