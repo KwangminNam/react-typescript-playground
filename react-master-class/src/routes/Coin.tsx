@@ -12,7 +12,7 @@ import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
 import Price from "./Price";
 import { useQuery } from "@tanstack/react-query";
-import {priceData,infoData } from '../api'
+import {infoFetcher , priceFetcher} from '../api'
 
 interface RouteState {
   state: string;
@@ -124,8 +124,6 @@ const Coin = () => {
   // const [loading, setLoading] = useState(true);
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
-  const [info, setInfo] = useState<InfoDataTypes>();
-  const [price, setPrice] = useState<PriceDataTypes>();
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
@@ -145,16 +143,22 @@ const Coin = () => {
   //   })();
   // }, [coinId]);
 
-  const { isLoading: infoLoaidng, data: infoData } = useQuery(
-    ["info", coinId],
-    () => infoData(coinId)
-  );
-  const { isLoading: priceLoading, data: priceData } = useQuery(
+  // const { isLoading: infoLoaidng, data: infoData } = useQuery(
+  //   ["info", coinId],
+  //   () => infoData(coinId)
+  // );
+
+  const {isLoading:infoLoading,data:infoData} = useQuery<InfoDataTypes>(
+    ["info",coinId],
+    () => infoFetcher(`${coinId}`)
+  )
+
+  const { isLoading: priceLoading, data: priceData } = useQuery<PriceDataTypes>(
     ["price", coinId],
-    () => priceData(coinId)
+    () => priceFetcher(`${coinId}`)
   );
 
-  const loading = infoLoaidng || priceLoading;
+  const loading = infoLoading || priceLoading;
 
   return (
     <>
