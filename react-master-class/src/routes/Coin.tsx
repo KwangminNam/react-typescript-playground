@@ -151,7 +151,7 @@ const Coin = () => {
   //   () => infoData(coinId)
   // );
 
-  const { isLoading: infoLoading, data: infoData } = useQuery<InfoDataTypes>(
+  const { isLoading: infoLoading, data: infoData , status } = useQuery<InfoDataTypes>(
     ["info", coinId],
     () => infoFetcher(`${coinId}`)
   );
@@ -162,6 +162,7 @@ const Coin = () => {
   );
 
   const loading = infoLoading || priceLoading;
+  console.log(priceData + "123123");
 
   return (
     <>

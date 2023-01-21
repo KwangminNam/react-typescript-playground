@@ -48,6 +48,10 @@ const Chart = ({ coinId }: ICoinId) => {
             chart: {
               height: 500,
               width: 500
+            },
+            stroke:{
+              curve:"smooth",
+              width:3
             }
           }}
         />
