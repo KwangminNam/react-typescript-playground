@@ -12,7 +12,7 @@ import Chart from "./\bChart";
 import { Header, Title, Loading, Container } from "./Coins";
 import Price from "./Price";
 import { useQuery } from "@tanstack/react-query";
-import {infoFetcher , priceFetcher} from '../api'
+import { infoFetcher, priceFetcher } from "../api";
 
 interface RouteState {
   state: string;
@@ -116,7 +116,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   a {
     display: block;
     width: 100%;
-    color: ${(props) => (props.isActive ? 'red' : "#000")};
+    color: ${(props) => (props.isActive ? "red" : "#000")};
     font-size: 16px;
   }
 `;
@@ -151,10 +151,10 @@ const Coin = () => {
   //   () => infoData(coinId)
   // );
 
-  const {isLoading:infoLoading,data:infoData} = useQuery<InfoDataTypes>(
-    ["info",coinId],
+  const { isLoading: infoLoading, data: infoData } = useQuery<InfoDataTypes>(
+    ["info", coinId],
     () => infoFetcher(`${coinId}`)
-  )
+  );
 
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceDataTypes>(
     ["price", coinId],
@@ -167,7 +167,9 @@ const Coin = () => {
     <>
       <Container>
         <Header>
-          <Title>{state ? state : loading ? "Loading.." : infoData?.name}</Title>
+          <Title>
+            {state ? state : loading ? "Loading.." : infoData?.name}
+          </Title>
         </Header>
         {loading ? (
           <Loading>Loading..</Loading>
@@ -200,17 +202,18 @@ const Coin = () => {
             </Overivew>
           </>
         )}
+        <Tabs>
+          <Tab isActive={chartMatch !== null}>
+            <Link to="chart">Chart</Link>
+          </Tab>
+          <Tab isActive={priceMatch !== null}>
+            <Link to="price">Price</Link>
+          </Tab>
+        </Tabs>
       </Container>
-      <Tabs>
-        <Tab isActive={chartMatch !== null}>
-          <Link to="chart">Chart</Link>
-        </Tab>
-        <Tab isActive={priceMatch !== null}>
-          <Link to="price">Price</Link>
-        </Tab>
-      </Tabs>
+
       <Routes>
-        <Route path="chart" element={<Chart coinId={coinId as string}/>} />
+        <Route path="chart" element={<Chart coinId={coinId as string} />} />
         <Route path="price" element={<Price />} />
       </Routes>
     </>
