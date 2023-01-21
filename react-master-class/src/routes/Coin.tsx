@@ -109,14 +109,15 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  background-color: tomato;
+  background-color: #fff;
   padding: 10px 0;
   color: #fff;
   border-radius: 10px;
   a {
     display: block;
     width: 100%;
-    color: ${(props) => (props.isActive ? props.theme.bgColor : "#fff")};
+    color: ${(props) => (props.isActive ? 'red' : "#000")};
+    font-size: 16px;
   }
 `;
 
@@ -126,6 +127,8 @@ const Coin = () => {
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
+
+  console.log(chartMatch);
 
   // useEffect(() => {
   //   (async () => {
@@ -207,7 +210,7 @@ const Coin = () => {
         </Tab>
       </Tabs>
       <Routes>
-        <Route path="chart" element={<Chart />} />
+        <Route path="chart" element={<Chart coinId={coinId as string}/>} />
         <Route path="price" element={<Price />} />
       </Routes>
     </>
