@@ -19,9 +19,12 @@ interface IHistroy {
 }
 
 const Chart = ({ coinId }: ICoinId) => {
-  const { isLoading, data, status } = useQuery<IHistroy[]>(
+  const { isLoading, data } = useQuery<IHistroy[]>(
     ["chart", coinId],
-    () => chartFetcher(coinId)
+    () => chartFetcher(coinId),
+    {
+      refetchInterval:5000
+    }
   );
   return (
     <div>
@@ -64,9 +67,10 @@ const Chart = ({ coinId }: ICoinId) => {
             },
             yaxis: { show: false },
             xaxis: { 
-              labels: { show: false },
+              labels: { show: false, datetimeFormatter:{month: "mmm 'yy"} },
               axisBorder:{show:false},
               axisTicks:{show:false},
+              type:"datetime",
               categories: data?.map((price) =>
               new Date(+price.time_close * 1000).toISOString()
               ),

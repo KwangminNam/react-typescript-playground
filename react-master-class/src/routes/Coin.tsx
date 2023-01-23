@@ -13,6 +13,7 @@ import { Header, Title, Loading, Container } from "./Coins";
 import Price from "./Price";
 import { useQuery } from "@tanstack/react-query";
 import { infoFetcher, priceFetcher } from "../api";
+import {Helmet} from "react-helmet"
 
 interface RouteState {
   state: string;
@@ -129,28 +130,6 @@ const Coin = () => {
   const chartMatch = useMatch("/:coinId/chart");
 
   console.log(chartMatch);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const infoData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-  //     ).json();
-
-  //     const priceData = await (
-  //       await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-  //     ).json();
-
-  //     setInfo(infoData);
-  //     setPrice(priceData);
-  //     setLoading(false);
-  //   })();
-  // }, [coinId]);
-
-  // const { isLoading: infoLoaidng, data: infoData } = useQuery(
-  //   ["info", coinId],
-  //   () => infoData(coinId)
-  // );
-
   const {
     isLoading: infoLoading,
     data: infoData,
@@ -159,7 +138,10 @@ const Coin = () => {
 
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceDataTypes>(
     ["price", coinId],
-    () => priceFetcher(`${coinId}`)
+    () => priceFetcher(`${coinId}`),
+    {
+      refetchInterval:5000
+    }
   );
 
   const loading = infoLoading || priceLoading;
@@ -167,6 +149,9 @@ const Coin = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{state ? state : loading ? "Loading.." : infoData?.name}</title>
+      </Helmet>
       <Container>
         <Header>
           <Title>
@@ -187,8 +172,8 @@ const Coin = () => {
                 <span>{infoData?.symbol}</span>
               </OverviewItem>
               <OverviewItem>
-                <span>Open Source</span>
-                <span>{infoData?.open_source === null ? "Yes" : "NO"}</span>
+                <span>Price</span>
+                <span>{priceData?.quotes.USD.price}</span>
               </OverviewItem>
             </Overivew>
             <Description>{infoData?.description}</Description>
