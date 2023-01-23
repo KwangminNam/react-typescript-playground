@@ -9,7 +9,7 @@ interface ICoinId {
 
 interface IHistroy {
   time_open: string;
-  time_close: string;
+  time_close: string ;
   open: number;
   high: number;
   low: number;
@@ -19,8 +19,9 @@ interface IHistroy {
 }
 
 const Chart = ({ coinId }: ICoinId) => {
-  const { isLoading, data , status} = useQuery<IHistroy[]>(["chart", coinId], () =>
-    chartFetcher(coinId)
+  const { isLoading, data, status } = useQuery<IHistroy[]>(
+    ["chart", coinId],
+    () => chartFetcher(coinId)
   );
   return (
     <div>
@@ -32,7 +33,7 @@ const Chart = ({ coinId }: ICoinId) => {
           series={[
             {
               name: coinId,
-              data: data?.map(item => item.close) as number[]
+              data: data?.map((item) => item.close) as number[]
             },
             {
               name: "price",
@@ -40,24 +41,41 @@ const Chart = ({ coinId }: ICoinId) => {
             }
           ]}
           options={{
-            theme:{
-              mode:"dark"
+            tooltip:{
+              y:{
+                formatter:(value) => `$${value.toFixed(2)}`
+              }
+            },
+            theme: {
+              mode: "dark"
             },
             chart: {
               height: 500,
               width: 500,
-              toolbar:{
-                show:false
+              toolbar: {
+                show: false
               },
-              background:"transparent"
+              background: "transparent"
             },
-            grid:{show:false},
-            stroke:{
-              curve:"smooth",
-              width:3
+            grid: { show: false },
+            stroke: {
+              curve: "smooth",
+              width: 3
             },
-            yaxis:{show:false},
-            xaxis:{labels:{show:false}}
+            yaxis: { show: false },
+            xaxis: { 
+              labels: { show: false },
+              axisBorder:{show:false},
+              axisTicks:{show:false},
+              categories: data?.map((price) =>
+              new Date(+price.time_close * 1000).toISOString()
+              ),
+            },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["tomato"] , stops:[0,100]}
+            },
+            colors:["beige"]
           }}
         />
       )}
