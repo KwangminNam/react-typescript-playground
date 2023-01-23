@@ -19,15 +19,13 @@ interface IHistroy {
 }
 
 const Chart = ({ coinId }: ICoinId) => {
-  const { isLoading, data } = useQuery<IHistroy[]>(["chart", coinId], () =>
+  const { isLoading, data , status} = useQuery<IHistroy[]>(["chart", coinId], () =>
     chartFetcher(coinId)
   );
-  console.log(JSON.stringify(data) + "!!!!");
-
   return (
     <div>
       {isLoading ? (
-        "Loading..."
+        "Loading...!!"
       ) : (
         <ApexChart
           type="line"
@@ -37,7 +35,7 @@ const Chart = ({ coinId }: ICoinId) => {
               data: data?.map(item => item.close) as number[]
             },
             {
-              name: "sales",
+              name: "price",
               data: [15, 17, 18, 50]
             }
           ]}
@@ -47,12 +45,19 @@ const Chart = ({ coinId }: ICoinId) => {
             },
             chart: {
               height: 500,
-              width: 500
+              width: 500,
+              toolbar:{
+                show:false
+              },
+              background:"transparent"
             },
+            grid:{show:false},
             stroke:{
               curve:"smooth",
               width:3
-            }
+            },
+            yaxis:{show:false},
+            xaxis:{labels:{show:false}}
           }}
         />
       )}

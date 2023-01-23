@@ -75,31 +75,19 @@ interface CoinTypes {
 }
 
 const Coins = () => {
-  const [coinData, setCoinData] = useState<CoinTypes[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  // const {isLoading,data} = useQuery<CoinTypes[]>(["allcoins"],fetchCoins);
-
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await res.json();
-      console.log(json.slice(0, 100));
-      setCoinData(json.slice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
+  const {isLoading,data} = useQuery<CoinTypes[]>(["allcoins"],fetchCoins);
 
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loading>Loading..</Loading>
       ) : (
         <CoinUl>
-          {coinData?.slice(0,100).map((item) => (
+          {data?.slice(0,100).map((item) => (
             <CoinLi key={item.id}>
               <Link to={`${item.id}`} state={item.name}>
               <Img src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}/>

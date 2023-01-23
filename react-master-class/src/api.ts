@@ -1,9 +1,12 @@
+
 const BASE_URL = "https://api.coinpaprika.com/v1";
 const customApi = "https://ohlcv-api.nomadcoders.workers.dev";
 
-export async function fetchCoins() {
-  return await (await fetch("https://api.coinpaprika.com/v1/coins")).json();
-  }
+export function fetchCoins() {
+  return fetch("https://api.coinpaprika.com/v1/coins").then((response) =>
+    response.json()
+  );
+}
 
 export async function infoFetcher(coinId:string){
   return await (await fetch(`${BASE_URL}/coins/${coinId}`)).json();

@@ -151,10 +151,11 @@ const Coin = () => {
   //   () => infoData(coinId)
   // );
 
-  const { isLoading: infoLoading, data: infoData , status } = useQuery<InfoDataTypes>(
-    ["info", coinId],
-    () => infoFetcher(`${coinId}`)
-  );
+  const {
+    isLoading: infoLoading,
+    data: infoData,
+    status
+  } = useQuery<InfoDataTypes>(["info", coinId], () => infoFetcher(`${coinId}`));
 
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceDataTypes>(
     ["price", coinId],
@@ -211,12 +212,11 @@ const Coin = () => {
             <Link to="price">Price</Link>
           </Tab>
         </Tabs>
+        <Routes>
+          <Route path="chart" element={<Chart coinId={coinId as string} />} />
+          <Route path="price" element={<Price />} />
+        </Routes>
       </Container>
-
-      <Routes>
-        <Route path="chart" element={<Chart coinId={coinId as string} />} />
-        <Route path="price" element={<Price />} />
-      </Routes>
     </>
   );
 };
