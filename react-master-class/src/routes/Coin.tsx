@@ -110,7 +110,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  background-color: #fff;
+  background-color: ${props => props.theme.bgColor};
   padding: 10px 0;
   color: #fff;
   border-radius: 10px;
@@ -133,7 +133,6 @@ const Coin = () => {
   const {
     isLoading: infoLoading,
     data: infoData,
-    status
   } = useQuery<InfoDataTypes>(["info", coinId], () => infoFetcher(`${coinId}`));
 
   const { isLoading: priceLoading, data: priceData } = useQuery<PriceDataTypes>(
@@ -144,8 +143,9 @@ const Coin = () => {
     }
   );
 
+  console.log(priceData?.quotes.USD.percent_change_12h);
+
   const loading = infoLoading || priceLoading;
-  console.log(priceData + "123123");
 
   return (
     <>
@@ -199,7 +199,7 @@ const Coin = () => {
         </Tabs>
         <Routes>
           <Route path="chart" element={<Chart coinId={coinId as string} />} />
-          <Route path="price" element={<Price />} />
+          <Route path="price" element={<Price coinId={coinId as string} />} />
         </Routes>
       </Container>
     </>
