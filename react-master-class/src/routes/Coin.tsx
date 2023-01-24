@@ -5,6 +5,7 @@ import {
   Routes,
   useLocation,
   useMatch,
+  useNavigate,
   useParams
 } from "react-router-dom";
 import styled from "styled-components";
@@ -13,7 +14,8 @@ import { Header, Title, Loading, Container } from "./Coins";
 import Price from "./Price";
 import { useQuery } from "@tanstack/react-query";
 import { infoFetcher, priceFetcher } from "../api";
-import {Helmet} from "react-helmet"
+import {Helmet} from "react-helmet-async"
+import HelmetCom from "./HelmetCom";
 
 interface RouteState {
   state: string;
@@ -75,10 +77,22 @@ interface PriceDataTypes {
   };
 }
 
+const BackBtn = styled.button`
+  background-color: ${props => props.theme.boxColor};
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  color: ${props => props.theme.textColor};
+  border: none;
+  border-radius: 100%;
+`
+
 const Overivew = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: orange;
+  background-color: ${props => props.theme.boxColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -110,14 +124,14 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.boxColor};
   padding: 10px 0;
-  color: #fff;
+  color:${props => props.theme.textColor};
   border-radius: 10px;
   a {
     display: block;
     width: 100%;
-    color: ${(props) => (props.isActive ? "red" : "#000")};
+    color: ${(props) => (props.isActive ? "red" : props.theme.textColor)};
     font-size: 16px;
   }
 `;
@@ -147,16 +161,22 @@ const Coin = () => {
 
   const loading = infoLoading || priceLoading;
 
+  const navigate = useNavigate();
+
+
   return (
     <>
-      <Helmet>
-        <title>{state ? state : loading ? "Loading.." : infoData?.name}</title>
-      </Helmet>
+      <HelmetCom
+        state={state}
+        loading={loading}
+        infoData={infoData?.name}
+      />
       <Container>
         <Header>
           <Title>
             {state ? state : loading ? "Loading.." : infoData?.name}
           </Title>
+          <BackBtn onClick={() => navigate(-1)}>뒤로가기</BackBtn>
         </Header>
         {loading ? (
           <Loading>Loading..</Loading>

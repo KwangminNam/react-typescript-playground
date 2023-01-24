@@ -19,12 +19,9 @@ interface IHistroy {
 }
 
 const Chart = ({ coinId }: ICoinId) => {
-  const { isLoading, data } = useQuery<IHistroy[]>(
+  const { isLoading, data, status } = useQuery<IHistroy[]>(
     ["chart", coinId],
-    () => chartFetcher(coinId),
-    {
-      refetchInterval:5000
-    }
+    () => chartFetcher(coinId)
   );
   return (
     <div>

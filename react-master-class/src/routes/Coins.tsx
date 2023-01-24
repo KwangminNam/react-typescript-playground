@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
+  position: relative;
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -62,7 +63,7 @@ const Img = styled.img`
   width: 25px;
   height: 25px;
   margin-right: 20px;
-`
+`;
 
 interface CoinTypes {
   id: string;
@@ -75,8 +76,7 @@ interface CoinTypes {
 }
 
 const Coins = () => {
-
-  const {isLoading,data} = useQuery<CoinTypes[]>(["allcoins"],fetchCoins);
+  const { isLoading, data } = useQuery<CoinTypes[]>(["allcoins"], fetchCoins);
 
   return (
     <Container>
@@ -87,12 +87,14 @@ const Coins = () => {
         <Loading>Loading..</Loading>
       ) : (
         <CoinUl>
-          {data?.slice(0,100).map((item) => (
+          {data?.slice(0, 100).map((item) => (
             <CoinLi key={item.id}>
               <Link to={`${item.id}`} state={item.name}>
-              <Img src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}/>
+                <Img
+                  src={`https://cryptocurrencyliveprices.com/img/${item.id}.png`}
+                />
                 {item.name} &rarr;
-              </Link>     
+              </Link>
             </CoinLi>
           ))}
         </CoinUl>
@@ -102,4 +104,3 @@ const Coins = () => {
 };
 
 export default Coins;
-          

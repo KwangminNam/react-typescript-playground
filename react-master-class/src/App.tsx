@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Router from "./Router";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { darkTheme , lightTheme} from "./theme";
+import { darkTheme, lightTheme } from "./theme";
+import {  HelmetProvider } from "react-helmet-async";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -37,8 +38,8 @@ footer, header, hgroup, main, menu, nav, section {
 }
 body {
   line-height: 1;
-  background-color: ${props => props.theme.bgColor};
-  color: ${props => props.theme.textColor};
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
 }
 menu, ol, ul {
   list-style: none;
@@ -65,16 +66,17 @@ a{
 `;
 
 const App = () => {
-
-  const [isDark,setIsDark ] = useState(false);
-  const toggle = () =>{
-    setIsDark(prev => !prev);
-  }
+  const [isDark, setIsDark] = useState(false);
+  const toggle = () => {
+    setIsDark((prev) => !prev);
+  };
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <button onClick={toggle}>Toggle!</button>
       <GlobalStyle />
-      <Router />
+      <HelmetProvider>
+        <Router />
+      </HelmetProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </ThemeProvider>
   );

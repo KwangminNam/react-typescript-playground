@@ -5,11 +5,13 @@ export const darkTheme:DefaultTheme = {
   btnColor:"#353b48",
   textColor:"#fff",
   aColor:"red",
+  boxColor:"tomato"
 }
 
 export const lightTheme:DefaultTheme = {
-  bgColor:"#fff",
+  bgColor:"beige",
   btnColor:"#353b48",
   textColor:"#000",
   aColor:"red",
+  boxColor:"#fff"
 }
