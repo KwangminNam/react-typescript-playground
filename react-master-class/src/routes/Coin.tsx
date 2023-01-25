@@ -143,7 +143,7 @@ const Coin = () => {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
-  console.log(chartMatch);
+
   const {
     isLoading: infoLoading,
     data: infoData,
@@ -176,7 +176,7 @@ const Coin = () => {
           <Title>
             {state ? state : loading ? "Loading.." : infoData?.name}
           </Title>
-          <BackBtn onClick={() => navigate(-1)}>뒤로가기</BackBtn>
+          <BackBtn onClick={() => navigate('/')}>뒤로가기</BackBtn>
         </Header>
         {loading ? (
           <Loading>Loading..</Loading>
