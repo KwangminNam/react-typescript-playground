@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { chartFetcher } from "../api";
 import ApexChart from "react-apexcharts";
+import { isDarkAtom } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 interface ICoinId {
   coinId: string;
@@ -23,6 +25,8 @@ const Chart = ({ coinId }: ICoinId) => {
     ["chart", coinId],
     () => chartFetcher(coinId)
   );
+
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <div>
       {isLoading ? (
@@ -47,7 +51,7 @@ const Chart = ({ coinId }: ICoinId) => {
               }
             },
             theme: {
-              mode: "dark"
+              mode: isDark ?  "dark" : "light"
             },
             chart: {
               height: 500,
