@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import {useSetRecoilState} from 'recoil';
+import { isDarkAtom } from "../atoms";
 
 export const Container = styled.div`
   padding: 0 20px;
@@ -77,11 +79,13 @@ interface CoinTypes {
 
 const Coins = () => {
   const { isLoading, data } = useQuery<CoinTypes[]>(["allcoins"], fetchCoins);
+  const setterFn = useSetRecoilState(isDarkAtom);
 
   return (
     <Container>
       <Header>
         <Title>코인</Title>
+        <button onClick={()=>{setterFn(prev => !prev)}}>Toggle</button>
       </Header>
       {isLoading ? (
         <Loading>Loading..</Loading>
