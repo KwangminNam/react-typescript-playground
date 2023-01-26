@@ -4,6 +4,8 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { darkTheme, lightTheme } from "./theme";
 import {  HelmetProvider } from "react-helmet-async";
+import {useRecoilValue} from 'recoil'
+import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -66,13 +68,11 @@ a{
 `;
 
 const App = () => {
-  const [isDark, setIsDark] = useState(false);
-  const toggle = () => {
-    setIsDark((prev) => !prev);
-  };
+  
+  const isDark = useRecoilValue(isDarkAtom);
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <button onClick={toggle}>Toggle!</button>
       <GlobalStyle />
       <HelmetProvider>
         <Router />
