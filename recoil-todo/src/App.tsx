@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import Router from "./Router";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { darkTheme, lightTheme } from "./theme";
 import {  HelmetProvider } from "react-helmet-async";
 import {useRecoilValue} from 'recoil'
 import { isDarkAtom } from "./atoms";
@@ -72,13 +70,7 @@ const App = () => {
   const isDark = useRecoilValue(isDarkAtom);
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
-      <HelmetProvider>
-        <Router />
-      </HelmetProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
-    </ThemeProvider>
   );
 };
 
