@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {  HelmetProvider } from "react-helmet-async";
-import {useRecoilValue} from 'recoil'
-import { isDarkAtom } from "./atoms";
+import { HelmetProvider } from "react-helmet-async";
+import { useRecoilValue } from "recoil";
+import { theme } from "./theme";
+import Form from "./Form";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -66,11 +67,11 @@ a{
 `;
 
 const App = () => {
-  
-  const isDark = useRecoilValue(isDarkAtom);
-
   return (
+    <>
       <GlobalStyle />
+      <Form />
+    </>
   );
 };
 
