@@ -3,20 +3,29 @@ import React, { useState } from 'react';
 const Form = () => {
 
   const [input , setInput] = useState("");
+  const [error, setError] = useState("");
 
-  const onChange = (event:any) => {
-    setInput(event.target.value)
+  const onChange = (event:React.FormEvent<HTMLInputElement>) => {
+    const {currentTarget :{value}} = event;
+    setInput(value);
+    setError("");
   }
 
-  const submit = (e:any) => {
+  const submit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(input);
+    if(input.length < 10){
+      return setError('should be longer');
+    }
+    console.log('correct!')
   }
+
+
 
   return (
     <form onSubmit={submit}>
       <input type="text" value={input}  onChange={onChange}/>
       <button>submit</button>
+      {error !== "" ? error : null}
     </form>
   );
 };
