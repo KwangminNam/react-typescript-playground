@@ -30,24 +30,53 @@ import { useForm } from "react-hook-form";
 // };
 
 const Form = () => {
-  const { register, handleSubmit , formState} = useForm();
+  const { register, handleSubmit, formState } = useForm();
 
   const onValid = (data: any) => {
     console.log(data);
   };
 
-  console.log(register("password"));
+  console.log(formState.errors)
 
   return (
     <>
-      <form onSubmit={handleSubmit(onValid)}>
-        <input {...register("userName", { required:"your input is too short" , minLength:{value:5,message:"your password is too short"}})} type="text" />
-        <input {...register("password" , { required: true , minLength:{value:5,message:"your pass word is to shoorrt"}})} type="text" />
-        <input {...register("passwordConfirmation" , {required:true , minLength:10})} type="text" />
-        <input {...register("userEmail" , {required:true , minLength:10})} type="text" />
-        <input {...register("userAge" , {required:true , minLength:10})} type="text" />
-        <button>add</button>
-
+      <form
+        onSubmit={handleSubmit(onValid)}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <input
+          {...register("userName", {
+            required: "your input is too short",
+            minLength: {
+              value: 5,
+              message: "your password is too short"
+            },
+            pattern:{
+              value:/^[A-Za-z0-9._%+-]+@naver.com$/,
+              message:"wrong"
+            }
+          })}
+          type="text"
+        />
+        <input
+          {...register("password", {
+            required: true,
+            minLength: { value: 5, message: "your pass word is to shoorrt" }
+          })}
+          type="text"
+        />
+        <input
+          {...register("passwordConfirmation", {
+            required: true,
+            minLength: 10
+          })}
+          type="text"
+        />
+        <input
+          {...register("userEmail", { required: true, minLength: 10 })}
+          type="text"
+        />
+        <button style={{backgroundColor:"tomato"}}>add</button>
       </form>
     </>
   );
