@@ -30,13 +30,13 @@ import { useForm } from "react-hook-form";
 // };
 
 const Form = () => {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState:{errors} } = useForm();
 
   const onValid = (data: any) => {
     console.log(data);
   };
 
-  console.log(formState.errors)
+  console.log(errors);
 
   return (
     <>
@@ -58,6 +58,7 @@ const Form = () => {
           })}
           type="text"
         />
+        <span>{errors.userName?.message as string}</span>
         <input
           {...register("password", {
             required: true,
