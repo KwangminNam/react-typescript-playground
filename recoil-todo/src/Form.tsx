@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {useForm} from 'react-hook-form'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 // const Form = () => {
 
@@ -20,8 +20,6 @@ import {useForm} from 'react-hook-form'
 //     console.log('correct!')
 //   }
 
-
-
 //   return (
 //     <form onSubmit={submit}>
 //       <input type="text" value={input}  onChange={onChange}/>
@@ -32,23 +30,27 @@ import {useForm} from 'react-hook-form'
 // };
 
 const Form = () => {
+  const { register, handleSubmit , formState} = useForm();
 
-  const {register,watch} = useForm();
+  const onValid = (data: any) => {
+    console.log(data);
+  };
 
-  console.log(watch());
-  console.log(register('userName'));
+  console.log(register("password"));
 
   return (
     <>
-      <form>
-        <input {...register('userName')} type="text"/>
-        <input {...register('password')} type="text"/>
-        <input {...register('passwordConfirmation')} type="text"/>
-        <input {...register('userEmail')} type="text"/>
-        <input {...register('userAge')} type="text"/>
+      <form onSubmit={handleSubmit(onValid)}>
+        <input {...register("userName", { required:"your input is too short" , minLength:{value:5,message:"your password is too short"}})} type="text" />
+        <input {...register("password" , { required: true , minLength:{value:5,message:"your pass word is to shoorrt"}})} type="text" />
+        <input {...register("passwordConfirmation" , {required:true , minLength:10})} type="text" />
+        <input {...register("userEmail" , {required:true , minLength:10})} type="text" />
+        <input {...register("userAge" , {required:true , minLength:10})} type="text" />
+        <button>add</button>
+
       </form>
     </>
-  )
-}
+  );
+};
 
 export default Form;
