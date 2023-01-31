@@ -58,7 +58,7 @@ const Form = () => {
           })}
           type="text"
         />
-        <span>{errors.userName?.message as string}</span>
+        <span>{errors.email?.message as string}</span>
         <input
           {...register("password", {
             required: true,
