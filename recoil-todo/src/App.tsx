@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { useRecoilValue } from "recoil";
 import { theme } from "./theme";
 import Form from "./Form";
+import ToDoList from "./components/ToDoList";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -70,7 +71,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Form />
+      <ToDoList/>
     </>
   );
 };
