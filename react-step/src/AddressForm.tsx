@@ -38,21 +38,21 @@ const AddressForm = ({
         onChange={(e) => {
           updateFields({ city: e.target.value });
         }}
-        required
+    ㅇ    required
       />
       <label>State</label>
-      <input
+  ㄷ    <inpuㅂㅈㅇㅂㅈㅇ ㅈㅂt
         type="text"
         required
         value={state}
-        onChange={(e) => {
+        onChㄷange={(e) => {
           updateFields({ state: e.target.value });
         }}
       />
       <label>ZipCode</label>
       <input
         type="text"
-        value={zip}
+        value={zip}ㄷㄷ
         onChange={(e) => {
           updateFields({ zip: e.target.value });
         }}
@@ -63,3 +63,4 @@ const AddressForm = ({
 };
 
 export default AddressForm;
+  ㄹㄷㅂㅈㅂㅈ
