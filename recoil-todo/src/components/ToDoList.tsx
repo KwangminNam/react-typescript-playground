@@ -8,15 +8,6 @@ const ToDoList = () => {
   return (
     <div>
       <CreateTodo/>
-      <ul>
-        {todo.map((item) => (
-          <li>
-            <div>{item.id}</div>
-            <div>{item.text}</div>
-            <div>{item.category}</div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };  
