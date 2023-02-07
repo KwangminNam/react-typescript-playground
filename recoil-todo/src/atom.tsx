@@ -9,7 +9,7 @@ interface IToDo {
 interface IForm {
   todo: string;
 }
-const toDostate = atom<IToDo[]>({
+export const toDostate = atom<IToDo[]>({
   key: "todo",
   default: []
 });
