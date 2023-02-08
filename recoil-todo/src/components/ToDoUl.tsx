@@ -6,7 +6,7 @@ const ToDoUl = () => {
 
   const [todo , setTodo] = useRecoilState(toDostate);
   
-  const del = (e:any) => {
+  const del = (e:number) => {
     const delData = todo.filter(item => item.id !== e);
     setTodo(delData);
   }
