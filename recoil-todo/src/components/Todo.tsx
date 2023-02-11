@@ -2,9 +2,9 @@ import React from "react";
 import { IToDo } from "./CreateTodo";
 
 const Todo = ({ text, category }: IToDo) => {
-  const onC = (e: IToDo["category"]) => {
-    console.log(e);
-  };
+  // const onC = (e: IToDo["category"]) => {
+  //   console.log(e);
+  // };
 
   const onC2 = (e:React.MouseEvent<HTMLButtonElement>) => {
 
