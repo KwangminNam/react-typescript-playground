@@ -6,6 +6,7 @@ import Todo from "./Todo";
 
 const ToDoList = () => {
   const todo = useRecoilValue(toDostate);
+  console.log(todo);
 
   return (
     <>

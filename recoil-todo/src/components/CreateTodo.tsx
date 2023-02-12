@@ -21,7 +21,6 @@ const CreateTodo = () => {
   const [todo, setToDo] = useRecoilState(toDostate);
 
   const onValid = ({ todo }: IForm) => {
-    console.log(todo);
     setValue("todo", "");
     setToDo((prev) => [{ id: Date.now(), text: todo, category: "DONE" }, ...prev]);
   };
