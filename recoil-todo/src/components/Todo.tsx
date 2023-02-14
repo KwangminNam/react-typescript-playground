@@ -1,11 +1,11 @@
 import React from "react";
 import { IToDo } from "./CreateTodo";
-import { atom, useRecoilState } from "recoil";
+import { atom, useSetRecoilState } from "recoil";
 import { toDostate } from "../atom";
 
 const Todo = ({ text, category ,id }: IToDo) => {
 
-  const [todo , setTodo ] = useRecoilState(toDostate);
+  const setTodo = useSetRecoilState(toDostate);
   
   const onC2 = (e:React.MouseEvent<HTMLButtonElement>) => {
 
@@ -14,14 +14,17 @@ const Todo = ({ text, category ,id }: IToDo) => {
     } = e;
 
     setTodo((prev)=>{
-
       const targetIndex = prev.findIndex((item) => item.id === id);
       const oldTodos = prev[targetIndex];
-      const neewTodos = { text , id , category:name};
+      const neewTodos = { text , id , category:name as any};
 
       console.log(oldTodos , neewTodos);
 
-      return prev;
+      return [
+        ...prev.slice(0,targetIndex + 1),
+        neewTodos,
+        ...prev.slice(targetIndex + 1),
+      ]
     })
   };
 
