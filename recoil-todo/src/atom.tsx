@@ -15,6 +15,7 @@ export const toDostate = atom<IToDo[]>({
 export const toDoSelecor = selector({
   key:'toDoselector',
   get:({get}) => {
-    return 'hI HI HI'
+    const todo = get(toDostate);
+    return todo.length;
   }
 })
