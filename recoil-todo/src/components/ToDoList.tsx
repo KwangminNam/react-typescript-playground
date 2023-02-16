@@ -1,12 +1,13 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { toDostate } from "../atom";
+import { toDoSelecor, toDostate } from "../atom";
 import CreateTodo from "./CreateTodo";
 import Todo from "./Todo";
 
 const ToDoList = () => {
   const todo = useRecoilValue(toDostate);
-  console.log(todo);
+  const selectorOutput = useRecoilValue(toDoSelecor);
+  console.log(selectorOutput)
 
   return (
     <>
