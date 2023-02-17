@@ -12,6 +12,8 @@ export const toDostate = atom<IToDo[]>({
   default: []
 });
 
+// recoil selector .. 
+
 export const toDoSelecor = selector({
   key:'toDoselector',
   get:({get}) => {
