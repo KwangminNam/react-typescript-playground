@@ -22,7 +22,7 @@ const CreateTodo = () => {
 
   const onValid = ({ todo }: IForm) => {
     setValue("todo", "");
-    setToDo((prev) => [{ id: Date.now(), text: todo, category: "DONE" }, ...prev]);
+    setToDo((prev) => [{ id: Date.now(), text: todo, category: "TO_DO" }, ...prev]);
   };
   return (
     <form onSubmit={handleSubmit(onValid)}>

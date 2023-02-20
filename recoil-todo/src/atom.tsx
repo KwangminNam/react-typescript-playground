@@ -1,7 +1,7 @@
-import {atom, selector} from 'recoil'
+import { atom, selector } from "recoil";
 
 interface IToDo {
-  id:number;
+  id: number;
   text: string;
   category: "TO_DO" | "DOING" | "DONE";
 }
@@ -12,12 +12,16 @@ export const toDostate = atom<IToDo[]>({
   default: []
 });
 
-// recoil selector .. 
+// recoil selector ..
 
 export const toDoSelecor = selector({
-  key:'toDoselector',
-  get:({get}) => {
+  key: "toDoselector",
+  get: ({ get }) => {
     const todo = get(toDostate);
-    return todo.length;
+    return [
+      todo.filter((item) => item.category === "TO_DO"),
+      todo.filter((item) => item.category === "DOING"),
+      todo.filter((item) => item.category === "DONE"),
+    ];
   }
-})
+});
