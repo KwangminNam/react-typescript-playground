@@ -19,6 +19,7 @@ const Todo = ({ text, category ,id }: IToDo) => {
       const neewTodos = { text , id , category:name as any};
 
       console.log(oldTodos , neewTodos);
+      console.log(targetIndex);
 
       return [
         ...prev.slice(0,targetIndex + 1),
