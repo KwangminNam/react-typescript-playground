@@ -1,4 +1,4 @@
-import React from "react";
+import React, { EventHandler, MouseEventHandler } from "react";
 import { IToDo } from "./CreateTodo";
 import { atom, useSetRecoilState } from "recoil";
 import { toDostate } from "../atom";
@@ -7,7 +7,7 @@ const Todo = ({ text, category ,id }: IToDo) => {
 
   const setTodo = useSetRecoilState(toDostate);
   
-  const onC2 = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const onC2:MouseEventHandler<HTMLButtonElement> = (e) => {
 
     const {
       currentTarget:{name}
