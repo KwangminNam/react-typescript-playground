@@ -5,6 +5,7 @@ import { toDostate } from "../atom";
 
 const Todo = ({ text, category ,id }: IToDo) => {
 
+
   const setTodo = useSetRecoilState(toDostate);
   
   const onC2:MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -22,7 +23,7 @@ const Todo = ({ text, category ,id }: IToDo) => {
       console.log(targetIndex);
 
       return [
-        ...prev.slice(0,targetIndex + 1),
+        ...prev.slice(0,targetIndex),
         neewTodos,
         ...prev.slice(targetIndex + 1),
       ]
