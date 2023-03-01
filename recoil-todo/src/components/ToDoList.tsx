@@ -13,6 +13,7 @@ const ToDoList = () => {
     <>
       <h1>Todo</h1>
       <hr />
+      <hr />
       <CreateTodo />
       <ul>
         {todo.map((item) => {
@@ -20,12 +21,14 @@ const ToDoList = () => {
         })}
       </ul>
       <hr />
-      <h1>Doing</h1>
+      <hr />
+      <h2>Doing</h2>
       {doing.map((item)=>{
         return <Todo key={item.id} {...item}/>
       })}
       <hr />
-      <h1>Done</h1>
+      <hr />
+      <h3>Done</h3>
       {done.map((item)=>{
         return <Todo key={item.id} {...item}/>
       })}
