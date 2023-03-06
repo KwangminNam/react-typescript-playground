@@ -11,10 +11,10 @@ const ToDoList = () => {
 
   return (
     <>
-      <h1>Todo</h1>
+      <h1>Todo</h1> 
       <hr />
       <hr />
-      <CreateTodo />
+      <CreateTodo />/
       <ul>
         {todo.map((item) => {
           return <Todo key={item.id} {...item}/>;
