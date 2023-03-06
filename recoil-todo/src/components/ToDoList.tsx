@@ -9,29 +9,21 @@ const ToDoList = () => {
   const selectorOutput = useRecoilValue(toDoSelecor);
   console.log(selectorOutput)
 
+  const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
+    console.log(event.currentTarget.value);
+  }
+
   return (
     <>
       <h1>Todo</h1> 
       <hr />
       <hr />
-      <CreateTodo />/
-      <ul>
-        {todo.map((item) => {
-          return <Todo key={item.id} {...item}/>;
-        })}
-      </ul>
-      <hr />
-      <hr />
-      <h2>Doing</h2>
-      {doing.map((item)=>{
-        return <Todo key={item.id} {...item}/>
-      })}
-      <hr />
-      <hr />
-      <h3>Done</h3>
-      {done.map((item)=>{
-        return <Todo key={item.id} {...item}/>
-      })}
+      <CreateTodo />
+    <select onChange={onInput}>
+      <option value="TO_DO">TO do</option>
+      <option value="DOING">DOing</option>
+      <option value="DONE">DONE</option>
+    </select>
     </>
   );
 };
