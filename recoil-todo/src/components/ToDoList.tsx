@@ -5,7 +5,6 @@ import CreateTodo from "./CreateTodo";
 import Todo from "./Todo";
 
 const ToDoList = () => {
-  const [todo,doing,done] = useRecoilValue(toDoSelecor);
   const selectorOutput = useRecoilValue(toDoSelecor);
   console.log(selectorOutput)
 
