@@ -6,7 +6,8 @@ import Todo from "./Todo";
 
 const ToDoList = () => {
   const selectorOutput = useRecoilValue(toDoSelecor);
-  console.log(selectorOutput)
+  const [toDo, doing , done] = useRecoilValue(toDoSelecor);
+  
 
   const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
     console.log(event.currentTarget.value);
