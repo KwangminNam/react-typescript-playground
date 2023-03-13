@@ -1,12 +1,13 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { toDoSelecor, toDostate } from "../atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { categoryState, toDoSelecor, toDostate } from "../atom";
 import CreateTodo from "./CreateTodo";
 import Todo from "./Todo";
 
 const ToDoList = () => {
   const selectorOutput = useRecoilValue(toDoSelecor);
   const [toDo, doing , done] = useRecoilValue(toDoSelecor);
+  const [categroy , setCateogry] = useRecoilState(categoryState);
   
 
   const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
