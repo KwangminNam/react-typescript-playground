@@ -6,25 +6,25 @@ import Todo from "./Todo";
 
 const ToDoList = () => {
   const selectorOutput = useRecoilValue(toDoSelecor);
-  const [toDo, doing , done] = useRecoilValue(toDoSelecor);
-  const [categroy , setCateogry] = useRecoilState(categoryState);
-  
+  const toDos = useRecoilValue(toDoSelecor);
+  const [categroy, setCateogry] = useRecoilState(categoryState);
 
-  const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
-    console.log(event.currentTarget.value);
-  }
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCateogry(event.currentTarget.value);
+  };
 
   return (
     <>
-      <h1>Todo</h1> 
+      <h1>Todo</h1>
       <hr />
       <hr />
       <CreateTodo />
-    <select onChange={onInput}>
-      <option value="TO_DO">TO do</option>
-      <option value="DOING">DOing</option>
-      <option value="DONE">DONE</option>
-    </select>
+      <select onChange={onInput}>
+        <option value="TO_DO">TO do</option>
+        <option value="DOING">DOing</option>
+        <option value="DONE">DONE</option>
+      </select>
+      {toDos?.map(item => <Todo key={item.id} {...item}/>)}
     </>
   );
 };

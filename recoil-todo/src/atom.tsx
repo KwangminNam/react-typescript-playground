@@ -27,10 +27,5 @@ export const toDoSelecor = selector({
     if(category === 'TO_DO') return todo.filter((item) => item.category === "TO_DO")
     if(category === 'DOING') return todo.filter((item) => item.category === "DOING")
     if(category === 'DONE') return todo.filter((item) => item.category === "DONE")
-    return [
-      todo.filter((item) => item.category === "TO_DO"),
-      todo.filter((item) => item.category === "DOING"),
-      todo.filter((item) => item.category === "DONE"),
-    ];
   }
 });
