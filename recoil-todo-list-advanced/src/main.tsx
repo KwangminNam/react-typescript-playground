@@ -66,12 +66,12 @@ a{
 `;
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle/>
         <App />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  
 );
