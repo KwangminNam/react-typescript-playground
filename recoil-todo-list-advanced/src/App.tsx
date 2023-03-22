@@ -1,5 +1,10 @@
 import React from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult
+} from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { todoSate } from "./atom";
@@ -35,12 +40,21 @@ const Card = styled.div`
   margin-bottom: 5px;
 `;
 
-
 function App() {
-  const onDragEnd = (ar) => {
-    console.log(ar);
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+
+    if(!destination) return;
+
+    setToDo((oldTodos) => {
+      const copyTodos = [...oldTodos];
+
+      copyTodos.splice(source.index , 1);
+      copyTodos.splice(destination?.index , 0 , draggableId);
+
+      return copyTodos;
+    });
   };
-  const [todo , setToDo ] = useRecoilState(todoSate);
+  const [todo, setToDo] = useRecoilState(todoSate);
 
   return (
     <Wrapper>
@@ -49,8 +63,8 @@ function App() {
           <Droppable droppableId="one">
             {(provided) => (
               <Board ref={provided.innerRef} {...provided.droppableProps}>
-                {todo.map((item , idx) => (
-                  <Draggable draggableId={item} key={idx} index={idx}>
+                {todo.map((item, idx) => (
+                  <Draggable draggableId={item} key={item} index={idx}>
                     {(provided) => (
                       <Card
                         ref={provided.innerRef}
