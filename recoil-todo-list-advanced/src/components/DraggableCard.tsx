@@ -20,7 +20,7 @@ function DraggableCard({item,idx}:DraggableCardProps) {
   console.log(item," has been rendered.")
 
   return (
-    <Draggable draggableId={item} key={idx} index={idx}>
+    <Draggable draggableId={item} key={item} index={idx}>
       {(provided) => (
         <Card
           ref={provided.innerRef}
