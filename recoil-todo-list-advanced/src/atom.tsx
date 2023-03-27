@@ -1,6 +1,14 @@
 import { atom , selector } from 'recoil'
 
-export const todoSate = atom({
+interface TodoType {
+  [key:string]:string[];
+}
+
+export const todoSate = atom<TodoType>({
   key:"toDo",
-  default:['one','two','three','four','five'],
+  default:{
+    to_do: ['one','two','three','four','five'],
+    doing: ['six','seven'],
+    done:['eight','nine','ten']
+  }
 })

@@ -16,9 +16,6 @@ const Card = styled.div`
 
 
 function DraggableCard({item,idx}:DraggableCardProps) {
-
-  console.log(item," has been rendered.")
-
   return (
     <Draggable draggableId={item} key={item} index={idx}>
       {(provided) => (
