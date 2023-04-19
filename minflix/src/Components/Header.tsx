@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
+import { Link, useMatch , PathMatch } from "react-router-dom";
 
 const Nav = styled.nav`
   display: flex;
@@ -38,24 +39,47 @@ const Item = styled.li`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   &:hover {
     color: ${(props) => props.theme.white.lighter};
   }
 `;
 
+const Circle = styled.span`
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: ${(props) => props.theme.red};
+  border-radius: 50%;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+`;
+
 const logoVar = {
-  normal:{
-    fillOpacity:1,
+  normal: {
+    fillOpacity: 1
   },
-  active:{
-    fillOpacity:[0 , 1 ,0],
-    transition:{
-      repeat:Infinity,
+  active: {
+    fillOpacity: [0, 1, 0],
+    transition: {
+      repeat: Infinity
     }
   }
-}
+};
+
 
 function Header() {
+
+  const homeMatch: PathMatch< string > | null = useMatch("/");
+  const tvMatch = useMatch("tv");
+
+  console.log(homeMatch)
+  console.log( tvMatch);
+  
   return (
     <Nav>
       <Col>
@@ -74,8 +98,12 @@ function Header() {
           />
         </Logo>
         <Items>
-          <Item>Home</Item>
-          <Item>TV SHOW</Item>
+          <Item>
+            <Link to="/">Home{homeMatch && <Circle />}</Link>
+          </Item>
+          <Item>
+          <Link to="tv">TV SHOW{tvMatch && <Circle />}</Link>
+          </Item>
         </Items>
       </Col>
       <Col>

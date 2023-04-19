@@ -1,7 +1,9 @@
 import React from "react";
 
 function Home(){
-  return <div style={{backgroundColor:"#ccc", height:"200vh"}}></div>
+  return <div>
+    HOME
+  </div>
 }
 
 export default Home;
