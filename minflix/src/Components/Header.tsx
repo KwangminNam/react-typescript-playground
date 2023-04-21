@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useMatch , PathMatch } from "react-router-dom";
+import { Link, useMatch, PathMatch } from "react-router-dom";
 
 const Nav = styled.nav`
   display: flex;
@@ -13,11 +13,13 @@ const Nav = styled.nav`
   background-color: black;
   height: 80px;
   font-size: 12px;
+  padding: 0 70px;
 `;
 
-const Col = styled.nav`
+const Col = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const Logo = styled(motion.svg)`
@@ -47,7 +49,7 @@ const Item = styled.li`
   }
 `;
 
-const Circle = styled.span`
+const Circle = styled(motion.span)`
   position: absolute;
   width: 5px;
   height: 5px;
@@ -57,6 +59,21 @@ const Circle = styled.span`
   left: 0;
   right: 0;
   margin: 0 auto;
+`;
+
+const Search = styled(motion.span)`
+  display: flex;
+  align-items: center;
+  position: relative;
+  svg{
+    height: 20px;
+  }
+`;
+
+const Input = styled(motion.input)`
+  transform-origin: right center;
+  position: absolute;
+  left: -170px;
 `;
 
 const logoVar = {
@@ -71,15 +88,13 @@ const logoVar = {
   }
 };
 
-
 function Header() {
-
-  const homeMatch: PathMatch< string > | null = useMatch("/");
+  const homeMatch: PathMatch<string> | null = useMatch("/");
   const tvMatch = useMatch("tv");
 
-  console.log(homeMatch)
-  console.log( tvMatch);
-  
+  const [showInput, setShowInput] = useState(false);
+  const showInputHandler = () => setShowInput(true);
+
   return (
     <Nav>
       <Col>
@@ -99,15 +114,30 @@ function Header() {
         </Logo>
         <Items>
           <Item>
-            <Link to="/">Home{homeMatch && <Circle />}</Link>
+            <Link to="/">Home{homeMatch && <Circle layoutId="circle" />}</Link>
           </Item>
           <Item>
-          <Link to="tv">TV SHOW{tvMatch && <Circle />}</Link>
+            <Link to="tv">
+              TV SHOW{tvMatch && <Circle layoutId="circle" />}
+            </Link>
           </Item>
         </Items>
       </Col>
       <Col>
-        <button>hellO!</button>
+        <Search onClick={showInputHandler}>
+          <svg viewBox="0 0 512 512">
+            <path
+              fillRule="evenodd"
+              fill="#fff"
+              d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <Input
+              animate={{ scaleX: showInput ? 1 : 0 }}
+              placeholder="Search your movies"
+           />
+        </Search>
       </Col>
     </Nav>
   );
