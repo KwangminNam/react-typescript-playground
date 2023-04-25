@@ -1,16 +1,15 @@
 import styled from "styled-components";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion , useAnimation , useScroll , useMotionValueEvent} from "framer-motion";
 import { Link, useMatch, PathMatch } from "react-router-dom";
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: black;
   height: 80px;
   font-size: 12px;
   padding: 0 70px;
@@ -88,15 +87,44 @@ const logoVar = {
   }
 };
 
+const navVar = {
+  top:{
+    backgroundColor:"rgba(0,0,0,0)"
+  },
+  scroll:{
+    backgroundColor:"rgba(0,0,0,1)"
+  }
+}
+
 function Header() {
   const homeMatch: PathMatch<string> | null = useMatch("/");
   const tvMatch = useMatch("tv");
 
   const [showInput, setShowInput] = useState(false);
-  const showInputHandler = () => setShowInput(prev => !prev);
+  const minflixAnimate = useAnimation();
+  const {scrollY } = useScroll();
+
+  const showInputHandler = () => {
+    if(showInput){
+      minflixAnimate.start({
+        scaleX:0
+      })
+    }else{  
+      minflixAnimate.start({scaleX:1})
+    }
+    setShowInput(prev => !prev)
+  };
+
+  useMotionValueEvent(scrollY,"change",(latest)=>{
+    if(latest > 80){
+      minflixAnimate.start("scroll")
+    }else{
+      minflixAnimate.start("top")
+    }
+  })
 
   return (
-    <Nav>
+    <Nav variants={navVar} animate={minflixAnimate} initial={"top"}>
       <Col>
         <Logo
           variants={logoVar}
@@ -134,7 +162,9 @@ function Header() {
             />
           </motion.svg>
           <Input
-              animate={{ scaleX: showInput ? 1 : 0 }}
+              initial={{scaleX:0}}
+              animate={minflixAnimate}
+              transition={{type:"liner"}}
               placeholder="Search your movies"
            />
         </Search>
