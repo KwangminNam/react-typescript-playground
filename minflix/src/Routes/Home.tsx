@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import { getImagePath } from "../util";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   background-color: #ccc;
@@ -50,12 +51,69 @@ const Row = styled(motion.div)`
   width: 100%;
 `;
 
-const Box = styled(motion.div)<{bgPhoto:string}>`
+const Box = styled(motion.div)<{ bgPhoto: string }>`
   height: 200px;
-  background-image: url(${props => props.bgPhoto});
+  background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
+
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  h4 {
+    font-size: 16px;
+    text-align: center;
+  }
+`;
+const rowVar = {
+  hidden: {
+    x: window.outerWidth + 5
+  },
+  visible: {
+    x: 0
+  },
+  exit: {
+    x: -window.outerWidth - 5
+  }
+};
+
+const boxVar = {
+  normal: {
+    scale: 1
+  },
+  hover: {
+    scale: 1.3,
+    y: -50,
+    transition: {
+      delay: 0.5,
+      type: "tween",
+      duration: 0.5
+    }
+  }
+};
+
+const infoVar = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      type: "tween",
+      duration: 0.5
+    }
+  }
+};
 
 function Home() {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -68,29 +126,26 @@ function Home() {
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const increaseIndex = () => {
-    if(data){
+    if (data) {
       if (leaving) return;
       toggleLeaving();
-      const totalMovies= data.results.length - 1;
+      const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / OFFSET) - 1;
-      setIndex((prev) => prev === maxIndex ? 0 : prev + 1);
+      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
-  const rowVar = {
-    hidden: {
-      x: window.outerWidth + 5
-    },
-    visible: {
-      x: 0
-    },
-    exit: {
-      x: -window.outerWidth - 5
-    }
+  const OFFSET = 6;
+  const navgatie = useNavigate();
+
+  const onBoxClik = (movieID: number) => {
+    navgatie(`movies/${movieID}`);
   };
 
-  const OFFSET = 6;
+  const movieIDMatch = useMatch("movies/:movieId");
+
+  console.log(movieIDMatch);
 
   return (
     <Wrapper>
@@ -111,7 +166,7 @@ function Home() {
                 variants={rowVar}
                 initial="hidden"
                 animate="visible"
-                exit="exit" 
+                exit="exit"
                 key={index}
                 transition={{ type: "tween", duration: 1 }}
               >
@@ -119,11 +174,41 @@ function Home() {
                   .slice(1)
                   .slice(OFFSET * index, OFFSET * index + OFFSET)
                   .map((item) => (
-                    <Box key={item.id} bgPhoto={getImagePath(item.backdrop_path,"w500")}/>
+                    <Box
+                      key={item.id}
+                      bgPhoto={getImagePath(item.backdrop_path, "w500")}
+                      whileHover="hover"
+                      initial="normal"
+                      variants={boxVar}
+                      transition={{ type: "tween" }}
+                      onClick={() => {
+                        onBoxClik(item.id);
+                      }}
+                    >
+                      <Info variants={infoVar}>
+                        <h4>{item.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {movieIDMatch && (
+              <motion.div
+                style={{
+                  position: "absolute",
+                  backgroundColor: "red",
+                  width: "40vw",
+                  height: "600px",
+                  top: 100,
+                  right: 0,
+                  left: 0,
+                  margin: "0 auto"
+                }}
+              />
+            )}
+          </AnimatePresence>
         </>
       )}
     </Wrapper>
