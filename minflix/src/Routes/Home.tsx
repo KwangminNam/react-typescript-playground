@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import { getImagePath } from "../util";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValueEvent,
+  useScroll
+} from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -77,6 +82,27 @@ const Info = styled(motion.div)`
     text-align: center;
   }
 `;
+
+const OverLay = styled(motion.div)`
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+`;
+
+const BigMovie = styled(motion.div)`
+  position: absolute;
+  border: 2px solid red;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+`;
+
 const rowVar = {
   hidden: {
     x: window.outerWidth + 5
@@ -139,13 +165,24 @@ function Home() {
   const OFFSET = 6;
   const navgatie = useNavigate();
 
-  const onBoxClik = (movieID: number) => {
+  const onBoxClick = (movieID: number) => {
     navgatie(`movies/${movieID}`);
+  };
+
+  const onOverlayClick = () => {
+    history.back();
   };
 
   const movieIDMatch = useMatch("movies/:movieId");
 
-  console.log(movieIDMatch);
+  const { scrollY } = useScroll();
+
+  const isMatch =
+    movieIDMatch?.params.movieId &&
+    data?.results.find(
+      (movie) => String(movie.id) === movieIDMatch.params.movieId
+    );
+  console.log(isMatch);
 
   return (
     <Wrapper>
@@ -175,6 +212,7 @@ function Home() {
                   .slice(OFFSET * index, OFFSET * index + OFFSET)
                   .map((item) => (
                     <Box
+                      layoutId={item.id + ""}
                       key={item.id}
                       bgPhoto={getImagePath(item.backdrop_path, "w500")}
                       whileHover="hover"
@@ -182,7 +220,7 @@ function Home() {
                       variants={boxVar}
                       transition={{ type: "tween" }}
                       onClick={() => {
-                        onBoxClik(item.id);
+                        onBoxClick(item.id);
                       }}
                     >
                       <Info variants={infoVar}>
@@ -195,18 +233,25 @@ function Home() {
           </Slider>
           <AnimatePresence>
             {movieIDMatch && (
-              <motion.div
-                style={{
-                  position: "absolute",
-                  backgroundColor: "red",
-                  width: "40vw",
-                  height: "600px",
-                  top: 100,
-                  right: 0,
-                  left: 0,
-                  margin: "0 auto"
-                }}
-              />
+              <>
+                <OverLay
+                  onClick={onOverlayClick}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <BigMovie
+                    layoutId={movieIDMatch.params.movieId}
+                    style={{ top: scrollY.get() + 100 }}
+                  >
+                    {isMatch && (
+                      <>
+                        <img src={getImagePath(isMatch.backdrop_path,"w500")} />
+                        <h2>{isMatch.title}</h2>
+                      </>
+                    )}
+                  </BigMovie>
+                </OverLay>
+              </>
             )}
           </AnimatePresence>
         </>

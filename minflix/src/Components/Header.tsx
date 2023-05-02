@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { motion , useAnimation , useScroll , useMotionValueEvent} from "framer-motion";
 import { Link, useMatch, PathMatch } from "react-router-dom";
 
@@ -116,12 +116,15 @@ function Header() {
   };
 
   useMotionValueEvent(scrollY,"change",(latest)=>{
-    if(latest > 80){
-      minflixAnimate.start("scroll")
+    if(latest > 40){
+      minflixAnimate.start("scroll");
+      console.log(latest);
     }else{
-      minflixAnimate.start("top")
+      minflixAnimate.start("top");
     }
-  })
+  });
+
+  console.log(scrollY);
 
   return (
     <Nav variants={navVar} animate={minflixAnimate} initial={"top"}>
