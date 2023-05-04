@@ -95,13 +95,34 @@ const OverLay = styled(motion.div)`
 
 const BigMovie = styled(motion.div)`
   position: absolute;
-  border: 2px solid red;
   width: 40vw;
   height: 80vh;
   left: 0;
   right: 0;
   margin: 0 auto;
+  background-color: ${props =>props.theme.black.lighter};
+  overflow: hidden;
 `;
+
+const BigCover = styled.img`
+  width: 100%;
+  height: 350px;
+  background-size: cover;
+  background-position: center center;
+`;
+
+const BigTitle = styled.h3`
+  color: ${props => props.theme.white.lighter};
+  font-weight: bold;
+  padding: 20px;
+  position: relative;
+  top: -80px;
+  font-size: 48px;
+`;
+
+const BigOverView = styled.p`
+  color: ${props => props.theme.white.lighter};
+`
 
 const rowVar = {
   hidden: {
@@ -182,7 +203,7 @@ function Home() {
     data?.results.find(
       (movie) => String(movie.id) === movieIDMatch.params.movieId
     );
-  console.log(isMatch);
+
 
   return (
     <Wrapper>
@@ -245,8 +266,9 @@ function Home() {
                   >
                     {isMatch && (
                       <>
-                        <img src={getImagePath(isMatch.backdrop_path,"w500")} />
-                        <h2>{isMatch.title}</h2>
+                        <BigCover style={{backgroundImage:`url(${getImagePath(isMatch.backdrop_path,"w500")})`}} />
+                        <BigTitle>{isMatch.title}</BigTitle>
+                        <BigOverView>{isMatch.overview}</BigOverView>
                       </>
                     )}
                   </BigMovie>
