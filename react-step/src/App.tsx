@@ -3,21 +3,18 @@ import { useMultieStep } from './useMultieStep';
 import UserForm from './UserForm';
 import AddressForm from './AddressForm';
 import AccountForm from './AccountForm';
-
+interface INITType{
+  firstName:string,
+  lastName:string,
+  age:string,
+  street:string,
+  city:string,
+  state:string,
+  eamil:string,
+  password:string,
+  zip:string
+}
 const App = () => {
-
-
-  interface INITType{
-    firstName:string,
-    lastName:string,
-    age:string,
-    street:string,
-    city:string,
-    state:string,
-    eamil:string,
-    password:string,
-    zip:string
-  }
   
   const INIT_DAT:INITType = {
     firstName:"",
